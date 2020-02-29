@@ -1,5 +1,6 @@
 package com.t248.lmf.crm;
 
+import com.t248.lmf.crm.entity.CstLost;
 import com.t248.lmf.crm.entity.User;
 import com.t248.lmf.crm.repository.CstLostRepostitor;
 import com.t248.lmf.crm.repository.CustomerRepostitor;
@@ -7,7 +8,6 @@ import com.t248.lmf.crm.repository.DictRepostitor;
 import com.t248.lmf.crm.repository.OrdersRepostitor;
 import com.t248.lmf.crm.service.IUserService;
 import com.t248.lmf.crm.service.MailService;
-import com.t248.lmf.crm.vo.DictInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,12 +42,10 @@ class RedisApplicationTests {
 
     @Test
     public void test2(){
-        List<DictInfo> list = dictRepostitor.getDicttype();
-        for (DictInfo d:
+        List<CstLost> list = cstLostRepostitor.findAll();
+        for (CstLost d:
              list) {
-            System.out.println(d.getId());
-            System.out.println(d.getCount());
-            System.out.println(d.getName());
+            System.out.println(d.getLstId());
         }
     }
 
