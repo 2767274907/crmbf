@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>暂缓流失</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-user"> </i>客户流失管理->暂缓流失</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="forms" class="form-horizontal form-label-left" th:action="@{/lost/save}" action="/sal/update" method="post">
+                        <input type="hidden" name="lstCustManagerId" th:value="${cstLost.lstCustManagerId}">
+                        <input type="hidden" name="lstCustNo" th:value="${cstLost.lstCustNo}">
+                        <input type="hidden" name="lstReason" th:value="${cstLost.lstReason}">
+                        <input type="hidden" name="lstLostDate" th:value="${null}">
+                        <input type="hidden" name="lstStatus" th:value="暂缓流失">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 编号 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="lstId" th:value="${cstLost.lstId}">
+                            <p th:text="${cstLost.lstId}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 客户名称 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="lstCustName" th:value="${cstLost.lstCustName}">
+                            <p th:text="${cstLost.lstCustName}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 客户经理
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="lstCustManagerName" th:value="${cstLost.lstCustManagerName}">
+                            <p th:text="${cstLost.lstCustManagerName}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 上次下单时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="lstLastOrderDate" th:value="${#dates.format(cstLost.lstLastOrderDate,'yyyy-MM-dd hh:mm:ss')}">
+                            <p th:text="${#dates.format(cstLost.lstLastOrderDate,'yyyy年MM月dd日')}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 暂缓措施 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <p th:text="${cstLost.lstDelay}"></p>
+                        </div>
+                        <label class="col-md-12 col-sm-12 col-xs-12"></label>
+                        <div class="form-group">
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 追加暂缓措施 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <textarea id="lstDelay" name="lstDelay" class="form-control" rows="4" placeholder="rows=&quot;3&quot;"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success">保存</button>
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+        $("#forms").submit(function () {
+            if($("#lstDelay").val()==""){
+                alert("请填写采取的措施");
+                return false;
+            }
+            return true;
+        })
+    });
+</script>
+</html>

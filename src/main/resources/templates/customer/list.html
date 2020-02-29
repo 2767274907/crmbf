@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <title>客户管理</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-users"></i> 客户管理
+                            <small>
+                                - 您可以根据客户名称、客户编号、地区、客户经理/负责人、客户等级进行筛选查询
+                            </small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form method="post" action="/customer/list" th:action="@{/customer/list}">
+                            <input type="hidden" name="pageIndex" value="1" id="fy"/>
+                            <ul>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户名称</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input name="custName" type="text" th:value="${custName}"
+                                                   class="form-control col-md-6 col-xs-12" value="">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户编号</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input name="custNo" type="text" th:value="${custNo}"
+                                                   class="form-control col-md-6 col-xs-12" value="">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">地区</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select name="custRegion" id="custRegion" class="form-control" required="required">
+                                                <option value="0">--请选择--</option>
+                                                <option th:selected="${dict.dictValue eq custRegion}" th:each="dict:${dqDictis}" th:value="${dict.dictValue}" th:text="${dict.dictItem}" value="">地区</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户经理</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input name="custManagerName" type="text" th:value="${custManagerName}"
+                                                   class="form-control col-md-6 col-xs-12" value="">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户等级</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <select name="custLevel" id="custLevel" class="form-control" required="required">
+                                                <option value="0">--请选择--</option>
+                                                <option th:selected="${dict.dictValue eq custLevel}" th:each="dict:${lvDictis}" th:value="${dict.dictValue}" th:text="${dict.dictItem}">角色</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-primary"> 查 &nbsp;&nbsp;&nbsp;&nbsp;询</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <div id="datatable-responsive_wrapper"
+                             class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="datatable-responsive"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="First name: activate to sort column descending"
+                                                aria-sort="ascending">序号
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                客户名称
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                客户编号
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                地区
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                客户经理/负责人
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                客户等级
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                操作
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd" th:each="customer:${customerPage.content}">
+                                            <td tabindex="0" class="sorting_1" th:text="${customer.custId}">usrId</td>
+                                            <td th:text="${customer.custName}">usrName</td>
+                                            <td th:text="${customer.custNo}">roleName</td>
+                                            <td th:text="${customer.custRegion}">roleName</td>
+                                            <td th:text="${customer.custManagerName}">roleName</td>
+                                            <td th:text="${customer.custLevelLabel}">roleName</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">点击操作</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a class="editInfo" href="/customer/edit?custId=1" th:href="@{/customer/edit(custId=${customer.custId})}"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="编辑">编辑</a></li>
+                                                        <li><a class="editInfo" href="/customer/lkm/list?custNo=1" th:href="@{/customer/lkm/list(custNo=${customer.custNo})}"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="编辑">客户联系人</a></li>
+                                                        <li><a class="editInfo" href="/customer/lkm/list?custNo=1" th:href="@{/customer/atv/list(custNo=${customer.custNo})}"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="编辑">客户交往记录</a></li>
+                                                        <li><a class="editInfo" href="/customer/odr/list?custNo=1" th:href="@{/customer/odr/list(custNo=${customer.custNo})}"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="编辑">查看订单</a></li>
+                                                        <li><a class="delInfo" id="del" href="#" th:onclick="doDel([[${customer.custNo}]])"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="删除">删除</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">
+                            共<span th:text="${customerPage.totalElements}">1</span>条记录
+                            <span th:text="${customerPage.number+1}">1</span>
+                            /<span th:text="${customerPage.totalPages}">1</span>页
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatable_responsive_paginate">
+                            <ul class="pagination">
+                                <li class="paginate_button" th:if="${customerPage.number gt 0 }">
+                                    <a href="javascript:page_nav(document.forms[0],1);"
+                                    aria-controls="datatable-responsive" data-dt-idx="0"
+                                    tabindex="0">首页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${customerPage.number gt 0 }">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${customerPage.number}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="1"
+                                       tabindex="0">上一页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${(customerPage.number+1) lt customerPage.totalPages }">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${customerPage.number+2}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="1"
+                                       tabindex="0">下一页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${(customerPage.number+1) lt customerPage.totalPages}">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${customerPage.totalPages}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="7"
+                                       tabindex="0">最后一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    function page_nav(dom,index){
+        $("#fy").val(index);
+        $(dom).submit();
+    }
+
+
+    function doDel(custNo){
+        if(confirm("你确定需要删除该用户信息吗？")){
+            $.ajax({
+                type:"GET",
+                url:"/crm/customer/del",
+                data:{"custNo":custNo},
+                dataType:"json",
+                success:function(data){
+                    if(data.delResult == "true"){//删除成功：移除删除行
+                        alert("删除成功");
+                        location.reload();
+                    }
+                },
+                error:function(data){
+                    alert("对不起，删除失败");
+                }
+            });
+        }
+    }
+</script>
+</html>

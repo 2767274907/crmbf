@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/regist.css}" href="../static/css/regist.css">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <article>
+            <h1><em>Logo</em><span>╳╳╳技术有限公司</span></h1>
+            <div class="main">
+                <form id="forms" action="/regist" th:action="@{/regist}" method="post">
+                    <div class="tel">
+                        <input type="email" name="userName" placeholder="邮箱"><em class="hidden">由11个字符组成！</em>
+                    </div>
+                    <div class="userName">
+                        <input type="text" id="userName" name="userName" placeholder="用户名"><em  class="hidden">由5-8个字符组成！</em>
+                    </div>
+                    <div class="password">
+                        <input type="password" name="pwd" placeholder="密码"><em  class="hidden">使用字母、数字、符号两种及以上的组合，8-12个字符</em>
+                    </div>
+                    <div class="againpwd">
+                        <input type="password" name="pwd" placeholder="再次输入密码"><em  class="hidden">两次密码不一致</em>
+                    </div>
+                    <div class="yzm">
+                        <input class="form-control" type="text" id="yzm" name="yzm" placeholder="验证码">
+                        <span class="input-group-btn">
+                              <button type="button" class="btn">获取验证码</button>
+                        </span>
+                        <em  class="hidden">两次密码不一致</em>
+                    </div>
+                    <button id="submit">注册</button>
+                    <a th:href="@{/login}" href="/login">已有账号？马上登陆</a>
+                </form>
+            </div>
+        </article>
+        <footer>
+            <ul>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">人才招聘</a></li>
+                <li><a href="#">友情链接</a></li>
+                <li><a href="#">公司地址</a></li>
+                <li><a href="#">关注我们</a></li>
+            </ul>
+            <p>本网站版权归╳╳╳技术有限公司所有，未经许可，不得转载。 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+        </footer>
+    </div>
+    <script>
+        $("#submit").onclick(function(){
+            $("#forms").submit();
+        })
+    </script>
+</body>
+</html>

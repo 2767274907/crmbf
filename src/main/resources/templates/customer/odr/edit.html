@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>订单明细</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2><i class="fa fa-briefcase"></i> 客户信息管理->客户信息->历史订单->订单明细</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br>
+                        <form id="forms" class="form-horizontal form-label-left" th:action="@{/exploit/save}"
+                              action="/exploit/update" method="post">
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 编号 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                <p th:text="${orders.odrId}"></p>
+                            </div>
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 客户名称 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                <p th:text="${orders.odrDate}"></p>
+                            </div>
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 负责人 <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                <p th:text="${orders.odrAddr}"></p>
+                            </div>
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 机会来源
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                <p th:text="${orders.odrStatus}"></p>
+                            </div>
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 成功几率（%） <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                                <p th:text="${orders.odrStatus}"></p>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group" style="height: 30px">
+                            </div>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class=" text-center"> 商品 </th>
+                                    <th class=" text-center"> 数量 </th>
+                                    <th class=" text-center"> 单位 </th>
+                                    <th class=" text-center"> 单价（元） </th>
+                                    <th class=" text-center"> 金额（元） </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="lines:${orders.ordersLines}">
+                                    <th scope="row" class=" text-center" th:text="${lines.product.prodName}"></th>
+                                    <th scope="row" class=" text-center" th:text="${lines.oddCount}"></th>
+                                    <th scope="row" class=" text-center" th:text="${lines.oddUnit}"></th>
+                                    <th scope="row" class=" text-center" th:text="${lines.product.prodPrice}"></th>
+                                    <th scope="row" class=" text-center" th:text="${lines.oddPrice}"></th>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" class="btn btn-primary" id="back">返回</button>
+                                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function () {
+        $("#back").on("click", function () {
+            window.history.back();
+        });
+    });
+</script>
+</html>

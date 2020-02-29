@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <title>交往记录</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-suitcase"></i> 客户信息管理->客户信息->交往记录
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <div id="datatable-responsive_wrapper"
+                             class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="/customer/atv/add" th:href="@{/customer/atv/add(custNo=${customer.custNo})}"
+                                       class="btn btn-success btn-sm">新增用户信息</a>
+                                    <a  href="/customer/list" th:href="@{/customer/list}"
+                                       class="btn btn-primary btn-sm" id="back">返回</a>
+                                    <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed">
+                                        <tr role="row">
+                                            <th>客户名称</th>
+                                            <td th:text="${customer.custName}"></td>
+                                            <th>客户编号</th>
+                                            <td th:text="${customer.custNo}"></td>
+                                        </tr>
+
+                                    </table>
+                                    <table id="datatable-responsive"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="First name: activate to sort column descending"
+                                                aria-sort="ascending">时间
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                地点
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                概要
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                详细信息
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                操作
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd" th:each="atv:${activityList}">
+                                            <td tabindex="0" class="sorting_1" th:text="${#dates.format(atv.atvDate,'yyyy年MM月dd日 hh时mm分')}">usrId</td>
+                                            <td th:text="${atv.atvPlace}">usrName</td>
+                                            <td th:text="${atv.atvTitle}">roleName</td>
+                                            <td th:text="${atv.atvDesc}">roleName</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">点击操作</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a class="editInfo" href="/customer/edit?custId=1" th:href="@{/customer/atv/edit(atvId=${atv.atvId})}"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="编辑">编辑</a></li>
+                                                        <li><a class="delInfo" id="del" href="#" th:onclick="|doDel(this,${atv.atvId})|"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="删除">删除</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    function page_nav(dom,index){
+        $("#fy").val(index);
+        $(dom).submit();
+    }
+
+
+    function doDel(obj,atvId){
+        if(confirm("你确定需要删除该交往记录吗？")){
+            $.ajax({
+                type:"GET",
+                url:"/crm/customer/atv/del",
+                data:"atvId="+atvId,
+                dataType:"json",
+                success:function(data){
+                    if(data.delResult == "true"){//删除成功：移除删除行
+                        alert("删除成功");
+                        $(obj).parents("tr").remove();
+                    }
+                },
+                error:function(data){
+                    alert("对不起，删除失败");
+                }
+            });
+        }
+    }
+</script>
+</html>

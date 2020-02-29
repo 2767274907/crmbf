@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>修改销售机会</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>修改销售机会 <i class="fa fa-briefcase"></i></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="forms" class="form-horizontal form-label-left" th:action="@{/customer/atv/save}" action="/customer/atv/save" method="post">
+                        <input type="hidden" name="atvCustNo" th:value="${customer.custNo}">
+                        <input type="hidden" name="atvCustName" th:value="${customer.custName}">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="atvDate"> 时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="atvDate" name="atvDate" th:value="${#dates.format(new java.util.Date(),'yyyy-MM-dd hh:mm:ss')}" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 地点 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="atvPlace" name="atvPlace" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 概要 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="atvTitle" name="atvTitle" >
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2" for="atvDesc"> 详细信息 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <textarea name="atvDesc" id="atvDesc" class="form-control" rows="4" placeholder="rows=&quot;3&quot;"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success">保存</button>
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+        $("#forms").submit(function(){
+            if ($("#atvDate").val()==null||$("#atvDate").val()==""){
+                alert("时间不能为空");
+                return false;
+            }
+            if ($("#atvPlace").val()==null||$("#atvPlace").val()==""){
+                alert("地点不能为空");
+                return false;
+            }
+            if ($("#atvTitle").val()==null||$("#atvTitle").val()==""){
+                alert("概要不能为空");
+                return false;
+            }
+        })
+
+    });
+</script>
+</html>

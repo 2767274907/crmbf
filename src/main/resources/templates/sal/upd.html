@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>指派经理</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-briefcase"></i> 销售机会管理->指派经理 </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="forms" class="form-horizontal form-label-left" th:action="@{/sal/update}" action="/sal/update" method="post">
+                        <input type="hidden" name="chcCreateId" th:value="${chance.chcCreateId}">
+                        <input type="hidden" name="chcCreateBy" th:value="${chance.chcCreateBy}">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="chcId"> 编号 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" id="chcId" name="chcId" th:value="${chance.chcId}">
+                            <p th:text="${chance.chcId}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="chcCustName"> 客户名称 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcCustName" name="chcCustName" th:value="${chance.chcCustName}">
+                            <p th:text="${chance.chcCustName}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="chcLinkman"> 负责人 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcLinkman" name="chcLinkman" th:value="${chance.chcLinkman}">
+                            <p th:text="${chance.chcLinkman}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 机会来源
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcSource" name="chcSource" th:value="${chance.chcSource}">
+                            <p th:text="${chance.chcSource}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 成功几率（%） <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcRate" name="chcRate" th:value="${chance.chcRate}">
+                            <p th:text="${chance.chcRate}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 公司电话 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcTel" name="chcTel" th:value="${chance.chcTel}">
+                            <p th:text="${chance.chcTel}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 地区 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcArea" name="chcArea" th:value="${chance.chcArea}">
+                            <p th:text="${chance.chcArea}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 客户等级 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcClientGrade" name="chcClientGrade" th:value="${chance.chcClientGrade}">
+                            <p th:text="${lv.dictItem}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 概要 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" id="chcTitle" name="chcTitle" th:value="${chance.chcTitle}">
+                            <p th:text="${chance.chcTitle}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2"> 机会描述 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <input type="hidden" class="form-control" id="chcDesc" name="chcDesc" th:value="${chance.chcDesc}">
+                                <p th:text="${chance.chcDesc}"></p>
+                            </div>
+                        </div>
+
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="chcCustName"> 指派经理 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <select name="chcDueId" id="chcDueId" class="form-control" required="required">
+                                <option value="0">--请选择--</option>
+                                <option th:each="user:${users}" th:value="${user.usrId}" th:text="${user.usrName}" value="">角色等级</option>
+                            </select>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="chcLinkman"> 指派时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" readonly id="chcDueDate" name="chcDueDate" th:value="${#dates.format(new java.util.Date(),'yyyy-MM-dd hh:mm:ss')}">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success">保存</button>
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+        $("#forms").submit(function () {
+            if($("#chcDueId").val()=="0"){
+                alert("带*号的为必填项");
+                return false;
+            }
+            return true;
+        })
+    });
+</script>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>角色添加</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>新增角色信息 <i class="fa fa-user"></i></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="clearfix"></div>
+                    <form class="form-horizontal form-label-left" th:action="@{/role/save}" action="/user/save" method="post">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 编号 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-2 col-sm-2 col-xs-12 form-group">
+                            <input type="hidden" name="roleId" th:value="${role.roleId}">
+                            <p th:text="${role.roleId}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="roleName"> 客户名称 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="roleName" name="roleName" th:value="${role.roleName}">
+                        </div>
+                        <div class="col-md-12 center-margin"></div>
+                        <div class="item form-group">
+                            <div class="col-md-6 center-margin">
+                                <button type="button" class="btn btn-success btn-sm" th:onclick="|xz(1)|">全选</button>
+                                <button type="button" class="btn btn-success btn-sm" th:onclick="|xz(0)|">全不选</button>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="text-center control-label col-md-3 col-sm-3 col-xs-12"> 用户角色 <span class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div th:each="right:${session.rights}">
+                                    <label th:text="${right.rightText}" th:for="${right.rightCode}"></label><input th:onclick="doChec(this)" th:checked="${right.rightCode eq rigMap[right.rightCode]}" type="checkbox" name="rightId" th:id="${right.rightCode}" th:value="${right.rightCode}">
+                                    <p class="col-lg-offset-1" th:each="rig:${session.map[right.rightCode]}">
+                                        <label th:text="${rig.rightText}" th:for="${rig.rightCode}"></label><input th:onclick="doClick(this)" th:checked="${rig.rightCode eq rigMap[rig.rightCode]}" type="checkbox" name="rightId" th:id="${rig.rightCode}" th:value="${rig.rightCode}">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success">保存</button>
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+    });
+    function  doChec(obj) {
+        if ($(obj).prop("checked")){
+            $(obj).nextAll().children("input").prop("checked", true);
+        }else{
+            $(obj).nextAll().children("input").prop("checked", false);
+        }
+    }
+
+    function doClick(obj){
+        var flag = true;
+        $(obj).parent().parent().children("p").each(function(i,val){
+            if($(val).find("input").prop("checked")){
+            }else{
+                flag = false;
+            }
+        })
+        $(obj).parent().parent().find("input").eq(0).prop("checked", flag);
+    }
+
+    function  xz(type) {
+        if (type==1){
+            $("[type=checkbox]").prop("checked", true);
+        }else{
+            $("[type=checkbox]").prop("checked", false);
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <title>服务类型管理</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-cube"></i> 服务类型管理
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form method="post" action="/user/list" th:action="@{/basic/gl/list/fw}">
+                            <input type="hidden" name="pageIndex" value="1" id="fy"/>
+                            <ul>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">值</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input name="dictItem" type="text" th:value="${dictItem}"
+                                                   class="form-control col-md-6 col-xs-12" value="">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-primary"> 查 &nbsp;&nbsp;&nbsp;&nbsp;询</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <div id="datatable-responsive_wrapper"
+                             class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="/user/add" th:href="@{/basic/gl/add/fw}"
+                                       class="btn btn-success btn-sm">新增</a>
+                                    <table id="datatable-responsive"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="First name: activate to sort column descending"
+                                                aria-sort="ascending">编号
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                值
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                操作
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd" th:each="dict,inx:${dicts.content}">
+                                            <td tabindex="0" class="sorting_1" th:text="${inx.count}">usrId</td>
+                                            <td th:text="${dict.dictItem}">usrName</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">点击操作</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a class="editInfo" href="/user/edit?usrId=1" th:href="@{/basic/gl/edit/fw(dictId=${dict.dictId})}"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="编辑">编辑</a></li>
+                                                        <li><a class="delInfo" id="del" href="#" th:onclick="|doDel(this,${dict.dictId})|"
+                                                               data-toggle="tooltip" data-placement="top" title=""
+                                                               data-original-title="删除">删除</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">
+                            共<span th:text="${dicts.totalElements}">1</span>条记录
+                            <span th:text="${dicts.number+1}">1</span>
+                            /<span th:text="${dicts.totalPages}">1</span>页
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatable_responsive_paginate">
+                            <ul class="pagination">
+                                <li class="paginate_button" th:if="${dicts.number gt 0 }">
+                                    <a href="javascript:page_nav(document.forms[0],1);"
+                                    aria-controls="datatable-responsive" data-dt-idx="0"
+                                    tabindex="0">首页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${dicts.number gt 0 }">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${dicts.number}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="1"
+                                       tabindex="0">上一页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${(dicts.number+1) lt dicts.totalPages }">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${dicts.number+2}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="1"
+                                       tabindex="0">下一页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${(dicts.number+1) lt dicts.totalPages}">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${dicts.totalPages}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="7"
+                                       tabindex="0">最后一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    function page_nav(dom,index){
+        $("#fy").val(index);
+        $(dom).submit();
+    }
+
+
+    function doDel(obj,dictId){
+        if(confirm("你确定需要删除该用户信息吗？")){
+            $.ajax({
+                type:"GET",
+                url:"/crm/basic/gl/del",
+                data:"dictId="+dictId,
+                dataType:"json",
+                success:function(data){
+                    if(data.delResult == "true"){//删除成功：移除删除行
+                        alert("删除成功");
+                        location.reload();
+                    }
+                },
+                error:function(data){
+                    alert("对不起，删除失败");
+                }
+            });
+        }
+    }
+</script>
+</html>

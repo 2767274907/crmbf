@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>服务创建</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-tree"></i> 客户服务管理->服务创建 </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="forms" class="form-horizontal form-label-left" th:action="@{/service/save}" action="/service/save" method="post">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 客户 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <select name="svrCustNo" id="svrCustNo" class="form-control" required="required">
+                                <option value="0">--请选择--</option>
+                                <option th:each="cust:${customers}" th:value="${cust.custNo}" th:text="${cust.custName}">角色</option>
+                            </select>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 服务类型 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <select name="svrType" id="svrType" class="form-control" required="required">
+                                <option value="0">--请选择--</option>
+                                <option th:each="type:${svrTypes}" th:value="${type.dictValue}" th:text="${type.dictItem}" value="">角色</option>
+                            </select>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 创建人 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input readonly type="text" class="form-control" id="svrCreateBy" name="svrCreateBy" th:value="${session.User.usrName}" >
+                            <input type="hidden" class="form-control" id="svrCreateId" name="svrCreateId" th:value="${session.User.usrId}" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" > 状态
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" readonly class="form-control" id="svrStatus" name="svrStatus" value="新创建">
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 概要 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="svrTitle" name="svrTitle" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 创建时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input readonly type="text" class="form-control" name="svrCreateDate" th:value="${#dates.format(new java.util.Date(),'yyyy-MM-dd hh:mm:ss')}" >
+                        </div>
+                        <div class="form-group">
+                            <label class="text-center col-md-2 col-sm-2 col-xs-2" for="svrRequest"> 详细信息 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <textarea name="svrRequest" id="svrRequest" class="form-control" rows="4" placeholder="rows=&quot;3&quot;"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success">保存</button>
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+        $("#forms").submit(function () {
+            if($("#svrCustNo").val()=="0"){
+                alert("请选择客户");
+                return false;
+            }
+            if($("#svrType").val()=="0"){
+                alert("请选择服务类型");
+                return false;
+            }
+            if($("#svrTitle").val()==""){
+                alert("请填写概要");
+                return false;
+            }
+            if($("#svrRequest").val()==""){
+                alert("填写详细信息");
+                return false;
+            }
+            return true;
+        })
+
+    });
+</script>
+</html>

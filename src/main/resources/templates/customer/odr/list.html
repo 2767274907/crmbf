@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <title>历史订单</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-briefcase"></i> 客户信息管理->客户信息->历史订单
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <div id="datatable-responsive_wrapper"
+                             class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="/customer/atv/add" th:href="@{/customer/atv/add(custNo=${customer.custNo})}"
+                                       class="btn btn-success btn-sm">新增用户信息</a>
+                                    <a  href="/customer/list" th:href="@{/customer/list}"
+                                       class="btn btn-primary btn-sm" id="back">返回</a>
+                                    <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed">
+                                        <tr role="row">
+                                            <th>客户名称</th>
+                                            <td th:text="${customer.custName}"></td>
+                                            <th>客户编号</th>
+                                            <td th:text="${customer.custNo}"></td>
+                                        </tr>
+
+                                    </table>
+                                    <table id="datatable-responsive"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="First name: activate to sort column descending"
+                                                aria-sort="ascending">订单编号
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                日期
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                送货地址
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                状态
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                操作
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd" th:each="orders:${ordersPage.content}">
+                                            <td tabindex="0" class="sorting_1" th:text="${orders.odrId}">usrId</td>
+                                            <td th:text="${#dates.format(orders.odrDate,'yyyy年MM月dd日 hh时mm分')}">usrName</td>
+                                            <td th:text="${orders.odrAddr}">roleName</td>
+                                            <td th:text="${orders.odrStatus}">roleName</td>
+                                            <td>
+                                                <a th:href="@{/customer/odr/edit(odrId=${orders.odrId})}"
+                                                    class="btn btn-primary btn-sm" id="back">查看</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="dataTables_paginate paging_simple_numbers" id="datatable_responsive_paginate">
+                                <ul class="pagination">
+                                    <li class="paginate_button" th:if="${ordersPage.number gt 0 }">
+                                        <a href="javascript:page_nav(document.forms[0],1);"
+                                           aria-controls="datatable-responsive" data-dt-idx="0"
+                                           tabindex="0">首页</a>
+                                    </li>
+                                    <li class="paginate_button" th:if="${ordersPage.number gt 0 }">
+                                        <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${ordersPage.number}+');'"
+                                           aria-controls="datatable-responsive" data-dt-idx="1"
+                                           tabindex="0">上一页</a>
+                                    </li>
+                                    <li class="paginate_button" th:if="${(ordersPage.number+1) lt ordersPage.totalPages }">
+                                        <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${ordersPage.number+2}+');'"
+                                           aria-controls="datatable-responsive" data-dt-idx="1"
+                                           tabindex="0">下一页</a>
+                                    </li>
+                                    <li class="paginate_button" th:if="${(ordersPage.number+1) lt ordersPage.totalPages}">
+                                        <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${ordersPage.totalPages}+');'"
+                                           aria-controls="datatable-responsive" data-dt-idx="7"
+                                           tabindex="0">最后一页</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    function page_nav(dom,index){
+        $("#fy").val(index);
+        $(dom).submit();
+    }
+</script>
+</html>

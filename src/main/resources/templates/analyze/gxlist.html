@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <title>客户贡献发现</title>
+    <script src="../../static/js/echarts.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-pie-chart"></i> 客户贡献发现
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <form method="post" action="/customer/list" th:action="@{/analyze/gxlist}">
+                            <input type="hidden" name="pageIndex" value="1" id="fy"/>
+                            <ul>
+                                <li>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户名称</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input name="custName" type="text" th:value="${custName}"
+                                                   class="form-control col-md-6 col-xs-12" value="">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-primary"> 查 &nbsp;&nbsp;&nbsp;&nbsp;询</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <div id="datatable-responsive_wrapper"
+                             class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button th:onclick="togg()"
+                                       class="btn btn-success btn-sm">统计图</button>
+                                    <a th:href="@{/analyze/Excel/gx}"
+                                       class="btn btn-success btn-sm">导出Excel</a>
+                                    <a th:href="@{/analyze/PDF/gx}"
+                                       class="btn btn-success btn-sm">导出PDF</a>
+                                    <table id="datatable-responsive"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="First name: activate to sort column descending"
+                                                aria-sort="ascending">序号
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                客户名称
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                订单金额（元）
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd" th:each="customer:${customerPage.content}">
+                                            <td tabindex="0" class="sorting_1" th:text="${customer.custId}">usrId</td>
+                                            <td th:text="${customer.custName}">usrName</td>
+                                            <td th:text="${preMap[customer.custId+'']}">roleName</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">
+                            共<span th:text="${customerPage.totalElements}">1</span>条记录
+                            <span th:text="${customerPage.number+1}">1</span>
+                            /<span th:text="${customerPage.totalPages}">1</span>页
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatable_responsive_paginate">
+                            <ul class="pagination">
+                                <li class="paginate_button" th:if="${customerPage.number gt 0 }">
+                                    <a href="javascript:page_nav(document.forms[0],1);"
+                                    aria-controls="datatable-responsive" data-dt-idx="0"
+                                    tabindex="0">首页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${customerPage.number gt 0 }">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${customerPage.number}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="1"
+                                       tabindex="0">上一页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${(customerPage.number+1) lt customerPage.totalPages }">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${customerPage.number+2}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="1"
+                                       tabindex="0">下一页</a>
+                                </li>
+                                <li class="paginate_button" th:if="${(customerPage.number+1) lt customerPage.totalPages}">
+                                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${customerPage.totalPages}+');'"
+                                       aria-controls="datatable-responsive" data-dt-idx="7"
+                                       tabindex="0">最后一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="pig">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">饼图</font></font></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <div id="echart_pie" style="height: 350px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background-color: transparent;" _echarts_instance_="ec_1580821942591"><div style="position: relative; overflow: hidden; width: 358px; height: 350px; cursor: pointer;"><canvas width="447" height="437" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 358px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(0, 0, 0, 0.5); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px/21px Arial, Verdana, sans-serif; padding: 5px; left: 149px; top: 153.4px;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">访问来源</font></font><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">搜索引擎：1548（60.42％）</font></font></div></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    function page_nav(dom,index){
+        $("#fy").val(index);
+        $(dom).submit();
+    }
+    var myeach = echarts.init(document.getElementById('echart_pie'));
+    $.getJSON("/crm/analyze/pie",function (data) {
+        myeach.setOption(data);
+        myeach.hideLoading();
+        $("#pig").toggle();
+    });
+    function togg() {
+        $("#pig").toggle();
+    }
+</script>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>修改销售机会</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <i class="fa fa-file-text-o"></i> 客户服务管理->服务归档
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="forms" class="form-horizontal form-label-left" th:action="@{/service/save}" action="/sal/update" method="post">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 编号 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrId" th:value="${cstService.svrId}">
+                            <p th:text="${cstService.svrId}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 服务类型 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrType" th:value="${cstService.svrType}">
+                            <p th:text="${cstService.svrType}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 概要 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12 form-group">
+                            <input type="hidden" name="svrTitle" th:value="${cstService.svrTitle}">
+                            <p th:text="${cstService.svrTitle}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 客户 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrCustName" th:value="${cstService.svrCustName}">
+                            <input type="hidden" name="svrCustNo" th:value="${cstService.svrCustNo}">
+                            <p th:text="${cstService.svrCustName}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 状态 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrStatus" th:value="已处理">
+                            <p th:text="${cstService.svrStatus}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 服务请求 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" name="svrRequest" th:value="${cstService.svrRequest}">
+                            <p th:text="${cstService.svrRequest}"></p>
+                        </div>
+
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 创建人
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrCreateId" th:value="${cstService.svrCreateId}">
+                            <input type="hidden" name="svrCreateBy" th:value="${cstService.svrCreateBy}">
+                            <p th:text="${cstService.svrCreateBy}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 创建时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrCreateDate" th:value="${#dates.format(cstService.svrCreateDate,'yyyy-MM-dd hh:mm:ss')}">
+                            <p th:text="${#dates.format(cstService.svrCreateDate,'yyyy-MM-dd hh:mm:ss')}"></p>
+                        </div>
+                        <div class="col-md-12" style="height: 30px"></div>
+
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 分配给 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrDueId" th:value="${cstService.svrDueId}">
+                            <input type="hidden" name="svrDueTo" th:value="${cstService.svrDueTo}">
+                            <p th:text="${cstService.svrDueTo}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 分配时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="hidden" name="svrDueDate" th:value="${#dates.format(cstService.svrDueDate,'yyyy-MM-dd hh:mm:ss')}">
+                            <p th:text="${#dates.format(cstService.svrDueDate,'yyyy-MM-dd hh:mm:ss')}"></p>
+                        </div>
+
+                        <div class="col-md-12" style="height: 30px"></div>
+
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 服务处理 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12 form-group">
+                            <input type="hidden" class="form-control" name="svrRequest" th:value="${cstService.svrDeal}">
+                            <p th:text="${cstService.svrDeal}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 处理人 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <p  th:text="${session.User.usrName}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 处理时间 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <p  th:text="${#dates.format(new java.util.Date(),'yyyy-MM-dd hh:mm:ss')}"></p>
+                        </div>
+                        <div class="col-md-12" style="height: 30px"></div>
+
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 处理结果 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <p name="svrResult" th:text="${cstService.svrResult}"></p>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 满意度 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <p th:each="x,inx:${xingxing}" th:if="${inx.count eq cstService.svrSatisfy}" th:text="${x}"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+
+    });
+</script>
+</html>

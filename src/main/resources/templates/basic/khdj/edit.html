@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>修改客户等级</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2> <i class="fa fa-cube"></i> 客户等级管理->修改客户等级</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="clearfix"></div>
+                        <form id="forms" class="form-horizontal form-label-left" th:action="@{/basic/gl/save/kh}" action="/user/save" method="post">
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button id="send" type="submit" class="btn btn-success">保存</button>
+                                    <button type="button" class="btn btn-primary" id="back">返回</button>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                            <input type="hidden" name="dictId" th:value="${dict.dictId}">
+                            <input type="hidden" name="dictType" th:value="${dict.dictType}">
+                            <input type="hidden" name="dictValue" th:value="${dict.dictValue}">
+                            <input type="hidden" name="dictIsEditable" th:value="${dict.dictIsEditable}">
+                            <div class="item form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="dictItem"> 值 <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="dictItem" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="dictItem" required="required"
+                                           placeholder="" th:value="${dict.dictItem}" type="text">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+        $("#forms").submit(function(){
+            if( $("#dictItem")==""){
+                alert("请填写值")
+                return false;
+            }
+
+        })
+    });
+</script>
+</html>

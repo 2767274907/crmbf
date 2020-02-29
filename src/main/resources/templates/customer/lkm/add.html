@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>新建联系人</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-user"></i> 客户信息管理->客户信息->联系人->新建联系人 </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <form id="forms" class="form-horizontal form-label-left" th:action="@{/customer/lkm/save}" action="/customer/lkm/save" method="post">
+                        <input type="hidden" name="lkmCustNo" th:value="${customer.custNo}">
+                        <input type="hidden" name="lkmCustName" th:value="${customer.custName}">
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="lkmName"> 姓名 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="lkmName" name="lkmName" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 性别 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group" style="height: 35px">
+                            <label>
+                                <input type="radio" checked name="lkmSex" value="男">男
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>
+                                <input type="radio"  name="lkmSex" value="女">女
+                            </label>
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 职位 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="lkmPostion" name="lkmPostion" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2" for="lkmTel"> 办公电话
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="lkmTel" name="lkmTel" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 手机 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="lkmMobile" name="lkmMobile" >
+                        </div>
+                        <label class="text-center col-md-2 col-sm-2 col-xs-2"> 备注 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                            <input type="text" class="form-control" id="lkmMemo" name="lkmMemo">
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success">保存</button>
+                                <button type="button" class="btn btn-primary" id="back">返回</button>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+        $("#forms").submit(function(){
+            if ($("#lkmName").val()==null||$("#lkmName").val()==""){
+                alert("联系人姓名不能为空");
+                return false;
+            }
+            if ($("#lkmPostion").val()==null||$("#lkmPostion").val()==""){
+                alert("请填写职位");
+                return false;
+            }
+            if ($("#lkmTel").val()==null||$("#lkmTel").val()==""){
+                alert("请填写办公电话");
+                return false;
+            }
+        })
+
+    });
+</script>
+</html>
